@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import Navbar from "./components/Navbar";
 import Landing from "./components/Landing";
 import Marquee from "./components/Marquee";
@@ -8,11 +9,20 @@ import Cards from "./components/Cards";
 import Footer from "./components/Footer";
 import LocomotiveScroll from 'locomotive-scroll';
 
-
 function App() {
-  const locomotiveScroll = new LocomotiveScroll();
+  useEffect(() => {
+    const locomotiveScroll = new LocomotiveScroll({
+      el: document.querySelector('#main-container'),
+      smooth: true,
+    });
+
+    return () => {
+      locomotiveScroll.destroy();
+    };
+  }, []);
+
   return (
-    <div className="w-full min-h-screen text-white bg-zinc-900">
+    <div id="main-container" className="w-full min-h-screen text-white bg-zinc-900">
       <Navbar />
       <Landing />
       <Marquee />

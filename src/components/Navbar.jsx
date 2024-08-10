@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 
 function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <div className="fixed z-20 backdrop-blur-[2px] w-full py-6 px-8 flex justify-between items-center">
+    <div className="fixed z-20 w-full py-6 px-8 flex justify-between items-center backdrop-blur-[2px] bg-zinc-900 bg-opacity-50">
       <div className="logo">
+        {/* Your logo SVG */}
         <svg
           width="72"
           height="30"
@@ -33,10 +40,53 @@ function Navbar() {
           ></path>
         </svg>
       </div>
-      <div className="links flex gap-10 font-['NeueMontreal']">
-        {["Services", "Our Work", "About Us", "Insights", "Contact us"].map((item, index) => (
-            <a key={index} className={`font-light ${index === 4 && "ml-32"} text-lg`}>{item}</a>
-        ))}
+      <div className="hidden md:flex links gap-10 font-['NeueMontreal']">
+        {["Services", "Our Work", "About Us", "Insights", "Contact us"].map(
+          (item, index) => (
+            <a
+              key={index}
+              className={`font-light ${index === 4 && "ml-32"} text-lg`}
+            >
+              {item}
+            </a>
+          )
+        )}
+      </div>
+      {/* Hamburger Menu Icon */}
+      <div className="md:hidden flex items-center">
+        <button onClick={toggleMenu} className="text-white focus:outline-none">
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16m-7 6h7"
+            />
+          </svg>
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      <div
+        className={`${
+          isOpen ? "block" : "hidden"
+        } absolute top-full left-0 w-full bg-zinc-900 backdrop-blur-[2px] md:hidden`}
+      >
+        <div className="flex flex-col items-center gap-6 py-6">
+          {["Services", "Our Work", "About Us", "Insights", "Contact us"].map(
+            (item, index) => (
+              <a key={index} className="font-light text-lg">
+                {item}
+              </a>
+            )
+          )}
+        </div>
       </div>
     </div>
   );
